@@ -1,1 +1,1 @@
-# cursorsio
+# CursorsIo : Cursors & SocketIo
