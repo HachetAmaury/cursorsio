@@ -23,7 +23,7 @@ nextApp.prepare().then(async () => {
   io.on('connection', (socket: socketio.Socket) => {
     !sockets.get(socket.id) && sockets.set(socket.id, { id: socket.id });
 
-    socket.broadcast.emit('datas', {
+    io.sockets.emit('datas', {
       data: Array.from(sockets),
       time: Date.now(),
     });
@@ -39,12 +39,19 @@ nextApp.prepare().then(async () => {
       });
     });
 
-    socket.on('message', message => {
-      console.log(sockets);
+    socket.on('MOUSE_POSITION_CHANGED', position => {
+      sockets.set(socket.id, { ...sockets.get(socket.id), position });
 
+      io.sockets.emit('datas', {
+        data: Array.from(sockets),
+        time: Date.now(),
+      });
+    });
+
+    socket.on('message', message => {
       sockets.set(socket.id, { ...sockets.get(socket.id), message });
 
-      socket.broadcast.emit('datas', {
+      io.sockets.emit('datas', {
         data: Array.from(sockets),
         time: Date.now(),
       });
