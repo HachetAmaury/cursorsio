@@ -8,7 +8,7 @@ import {
 import { io } from 'socket.io-client';
 import styled from 'styled-components';
 
-const RANGE_BETWEEN_MOUSE_POISTION_UPDATES = 0;
+const RANGE_BETWEEN_MOUSE_POISTION_UPDATES = 1000;
 
 const StyledHomeComponent = styled.div`
   min-height: 100vh;
