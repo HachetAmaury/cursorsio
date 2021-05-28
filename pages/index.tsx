@@ -8,7 +8,7 @@ import {
 import { io } from 'socket.io-client';
 import styled from 'styled-components';
 
-const RANGE_BETWEEN_MOUSE_POSITION_UPDATES = 100;
+const RANGE_BETWEEN_MOUSE_POSITION_UPDATES = 10;
 
 const StyledHomeComponent = styled.div`
   min-height: 100vh;
@@ -100,20 +100,20 @@ export default function Home() {
         <div>
           {datas &&
             datas?.map(element => {
-              console.log(element);
-
               const [key, value] = element;
-
-              if (key === socket.id) return;
 
               return (
                 <div
                   style={{
                     position: 'absolute',
-                    top: value?.position?.y,
-                    left: value?.position?.x,
-                    height: '30px',
-                    width: '30px',
+                    top:
+                      key === socket.id
+                        ? value?.position?.y + 10
+                        : value?.position?.y,
+                    left:
+                      key === socket.id
+                        ? value?.position?.x + 10
+                        : value?.position?.x,
                   }}
                   key={key}
                 >
