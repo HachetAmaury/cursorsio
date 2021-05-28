@@ -8,7 +8,7 @@ import {
 import { io } from 'socket.io-client';
 import styled from 'styled-components';
 
-const RANGE_BETWEEN_MOUSE_POISTION_UPDATES = 1000;
+const RANGE_BETWEEN_MOUSE_POSITION_UPDATES = 100;
 
 const StyledHomeComponent = styled.div`
   min-height: 100vh;
@@ -28,8 +28,6 @@ export default function Home() {
     });
 
     socketTemp.on('datas', ({ data }) => {
-      console.log(data);
-
       setDatas(data);
     });
 
@@ -43,8 +41,6 @@ export default function Home() {
       socket && socket.close();
     };
   }, []);
-
-  console.log(socket);
 
   useEffect(() => {
     socket && socket.emit('message', message);
@@ -60,14 +56,12 @@ export default function Home() {
     setLastMousePositionUpdateTime(Date.now());
   }, []);
 
-  console.log(`[${mouseX},${mouseY}]`);
-
   return (
     <StyledHomeComponent
       onMouseMove={e => {
         if (
           Date.now() - lastMousePositionUpdateTime >
-          RANGE_BETWEEN_MOUSE_POISTION_UPDATES
+          RANGE_BETWEEN_MOUSE_POSITION_UPDATES
         ) {
           setLastMousePositionUpdateTime(Date.now());
           setMouseY(e.clientY);
